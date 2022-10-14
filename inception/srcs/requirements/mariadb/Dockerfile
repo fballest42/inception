@@ -10,12 +10,7 @@ ARG MARIADB_ADMIN_PASS
 
 RUN apt-get update && apt-get install -y mariadb-server vim;
 
-COPY tools/mariadb_setup.sh /
-RUN chmod +x mariadb_setup.sh
-
-#RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-#RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN mysql_install_db;		\
     service mysql start;	\
@@ -29,7 +24,3 @@ RUN mysql_install_db;		\
 
 CMD ["mysqld"]
 
-#CMD ["sh", "mariadb_setup.sh", "${MARIADB_NAME}", "${MARIADB_USER}", "${MARIADB_PASS}", "${MARIADB_ADMIN_USER}", "${MARIADB_ADMIN_PASS}"]"
-
-#CMD ["bash"]
-#mysqld"]

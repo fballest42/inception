@@ -1,10 +1,5 @@
 #!/bin/bash
 
-
-#wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASS} --dbhost='mariadb' --dbcharset='utf8' --locale='es_ES'
-
-#cp /var/www/wp-config.php /var/www/wordpress/wp-config.php
-
 wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar;
 
 chmod +x wp-cli.phar;

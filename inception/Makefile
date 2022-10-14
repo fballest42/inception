@@ -19,7 +19,7 @@ stop:
 	docker compose -f $(COMPOSE_FILE)  down
 
 log:
-	docker compose -f $(COMPOSE_FILE) events
+	docker compose -f $(COMPOSE_FILE) logs
 
 clean:  stop
 	cd ./srcs && docker system prune -af
