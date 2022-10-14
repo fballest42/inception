@@ -1,0 +1,80 @@
+version: '3'
+networks:
+  inception:
+    name: inception
+
+volumes:
+  mdb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/mariadb
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    ports: 
+      - "3306:3306"
+    build: 
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      args:
+        MARIADB_NAME: ${MARIADB_NAME} 
+        MARIADB_USER: ${MARIADB_USER}
+        MARIADB_PASS: ${MARIADB_PASS}
+        MARIADB_ADMIN_USER: ${MARIADB_ADMIN_USER}
+        MARIADB_ADMIN_PASS: ${MARIADB_ADMIN_PASS}
+    networks: 
+      - inception
+    volumes:
+      - "mdb:/var/lib/mysql"
+    env_file: .env
+
+  wordpress:
+    depends_on:
+      - mariadb
+    image: wordpress
+    restart: always
+    ports:
+      - "9000:9000"
+    build: 
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+      args:
+        EMAIL_USER: ${EMAIL_USER}
+        EMAIL_ADMIN: ${EMAIL_ADMIN}
+        HTTP_NAME: ${HTTP_NAME}
+        WP_USER_NAME: ${WP_USER_NAME}
+        WP_USER_PASS: ${WP_USER_PASS}
+        WP_ADMIN_NAME: ${WP_ADMIN_NAME}
+        WP_ADMIN_PASS: ${WP_ADMIN_PASS}
+    volumes:
+      - "wp:/var/www/wordpress"
+    networks:
+      - inception
+        #stdin_open: true
+        #tty: true
+        #command: "/bin/bash"
+    env_file: .env
+  nginx:
+    depends_on:
+      - wordpress
+    image: nginx
+    restart: always
+    ports: 
+      - "443:443"
+    build: 
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - "wp:/var/www/wordpress"
+    networks:
+      - inception
