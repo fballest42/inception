@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  nano:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        HOLA: ${HOLA}
+        ADIOS: ${ADIOS}
+    stdin_open: true
+    tty: true
+    command: bash -c "/bin/echo $HOLA $ADIOS && /usr/bin/env"
