@@ -7,15 +7,18 @@ clear
 echo "${BLUE}*******************************************************"
 echo "${BLUE}* ${NC}THIS SCRIPT WILL PREPARE UBUNTU TO WORK WITH DOCKER ${BLUE}*"
 echo "${BLUE}*******************************************************\n"
+
 echo "${BLUE}********************************"
 echo "${BLUE}* ${NC}REMOVING DOCKER OLD VERSIONS ${BLUE}*"
 echo "${BLUE}********************************${NC}"
 sudo apt-get remove -y docker docker-engine docker.io containerd.io
 rm -rf /usr/share/keyrings/docker-archive-keyring.gpg
 echo "${GREEN}********\n* DONE *\n********\n"
+
 echo "${BLUE}*******************\n* ${NC}UPDATING DEBIAN ${BLUE}*\n******************${NC}"
 sudo apt-get update
 echo "${GREEN}********\n* DONE *\n********\n${NC}"
+
 echo "${BLUE}*****************************\n* ${NC}INSTALING UTILS IN DEBIAN ${BLUE}*\n*****************************${NC}"
 sudo apt-get install -y \
 	ca-certificates \
@@ -23,8 +26,9 @@ sudo apt-get install -y \
 	gnupg \
 	lsb-release \
 	vim \
-	make
+	make \
 	git && echo "${GREEN}********\n* DONE *\n********\n${NC}"
+
 echo "${BLUE}****************************\n* ${NC}GETTING DOCKER REPO INFO ${BLUE}*\n****************************${NC}"
 sudo mkdir -p /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -32,6 +36,7 @@ sudo echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
 	$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "${GREEN}********\n* DONE *\n********\n${NC}"
+
 echo "${BLUE}************************\n* ${NC}INSTALLING DOCKER ${BLUE}*\n*********************\n${NC}"
 sudo apt-get update
 sudo apt-get install -y \
@@ -40,13 +45,7 @@ sudo apt-get install -y \
         containerd.io \
 	docker-compose-plugin 
 echo "${GREEN}********\n* DONE *\n********\n${NC}"
-	
-#	apt-transport-https \
-#        apt-utils \
-#        ca-certificates \
-#        curl \
-#        gnupg-agent \
-#        software-properties-common
+
 echo "${BLUE}***************************************************\n* ${NC}SETTING THE GROUP DOCKER AND PERMISIONS TO USER ${BLUE}*\n***************************************************${NC}"
 if id -nGz "$USER" | grep -qzxF "docker"
 then
@@ -71,6 +70,7 @@ echo "ff02::1 ip6-allnodes" >> /etc/hosts && \
 echo "ff02::2 ip6-allrouters" >> /etc/hosts && \
 sudo chmod 644 /etc/hosts && \
 echo "${GREEN}********\n* DONE *\n********\n${NC}"
+
 echo "${GREEN}**********************************************\n* FINISHED, SYSTEM READY TO WORK WITH DOCKER *\n**********************************************\n${NC}"
 
 << 'COMMENTED'

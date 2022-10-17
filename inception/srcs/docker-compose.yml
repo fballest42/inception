@@ -63,6 +63,7 @@ services:
     networks:
       - inception
     env_file: .env
+
   nginx:
     depends_on:
       - wordpress
