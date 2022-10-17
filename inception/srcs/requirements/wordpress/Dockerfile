@@ -14,7 +14,8 @@ ARG MARIADB_USER
 ARG MARIADB_PASS
 
 RUN apt-get update
-RUN apt-get install -y php7.3-fpm \
+RUN apt-get install -y
+    php7.3-fpm \
     php7.3-mysqli \
     mariadb-client \
     wget \
