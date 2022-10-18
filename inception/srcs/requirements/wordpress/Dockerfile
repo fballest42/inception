@@ -18,7 +18,6 @@ RUN apt-get install -y php7.3-fpm \
     php7.3-mysqli \
     mariadb-client \
     wget \
-    sendmail \
     vim
 
 WORKDIR /var/www
