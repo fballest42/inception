@@ -48,6 +48,7 @@ mariadb:
 	docker exec -it mariadb /bin/bash
 
 help:
+	@echo "THIS IS THE LIST OF AVAILABLE OPTIONS FOR MAKE"
 	@echo "'all' -------> to clean, prepare and launch inception"
 	@echo "'setup' -----> to prepare the system"
 	@echo "'build' -----> to launch inception"

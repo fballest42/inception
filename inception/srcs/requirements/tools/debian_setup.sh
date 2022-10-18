@@ -54,11 +54,13 @@ else
         sudo groupadd docker; sudo usermod -aG docker "$USER"; newgrp docker ; echo "${GREEN}********\n* DONE *\n********"
 fi
 echo "${GREEN}********\n* DONE *\n********\n"
+
 echo "${BLUE}*************************************\n* ${NC}SETTING ENVIROMET VARIABLE FOLDER ${BLUE}*\n*************************************${NC}"
 set -o allexport
 . ../../.env
 set +o allexport
 echo "${GREEN}********\n* DONE *\n********\n"
+
 echo "${BLUE}*******************************\n* ${NC}SETTING HOSTS ON HOSTS FILE ${BLUE}*\n*******************************${NC}"
 sudo chmod 777 /etc/hosts && echo "127.0.0.1 localhost" > /etc/hosts && \
 echo "127.0.1.1 inception debian" >> /etc/hosts && \
@@ -82,3 +84,4 @@ newgrp docker
 sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 sudo chmod g+rwx "$HOME/.docker" -R
 COMMENTED
+
